@@ -38,7 +38,7 @@ def subtract(raw_input):
     return lst[0] - sum(lst[1:])
 
 
-def string_histogram(text):
+def char_histogram(text):
     """Return dictionary of letters : frequency of each letter
     in given text
     """
@@ -57,17 +57,17 @@ def frequencies(histogram):
             for ord in range(97,123)]
 
 
-def crack_caesar(exampletext, text):
+def solve_puzzle(exampletext, text):
     """Return the decoded text by using the letter frequency probability of a given exampletext 
     and compare it to the letter probability vector of the en-/ decoded text, 
     The solution with a minimized chi-squared value should be the result
     """
-    prob_E_vec = frequencies(string_histogram(exampletext))
+    prob_E_vec = frequencies(char_histogram(exampletext))
     chi_values = {}
 
     for i in range(26):
         chi_squared = 0
-        prob_O_vec = frequencies(string_histogram(encode_text(text,26-i)))
+        prob_O_vec = frequencies(char_histogram(encode_text(text,26-i)))
     
         for prob_E, prob_O in zip(prob_E_vec, prob_O_vec):
             if prob_E != 0:
@@ -96,7 +96,7 @@ if __name__ == "__main__":
         )
 
     print("\ncrack caesars text!")
-    print(crack_caesar(exampletext, puzzle),"\n")
+    print(solve_puzzle(exampletext, puzzle),"\n")
     
     if len(sys.argv) < 3: 
         raise SystemExit("""
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     print(encode_text(*sys.argv[1:]), "\n")
 
     print("Histogram for the given text")
-    print(string_histogram(sys.argv[1]), "\n")
+    print(char_histogram(sys.argv[1]), "\n")
 
 ######
 #
